@@ -2,9 +2,6 @@
 node_modules
 package-lock.json
 package.json
-# Design
-style-guide.md
-design
 # Rest
 .vscode
 .gitignore
