@@ -1,0 +1,75 @@
+@use "sass:math";
+@use "variables" as *;
+
+@function strip-units($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return math.div($number, ($number * 0 + 1));
+  }
+
+  @return $number;
+}
+
+@function rem($value) {
+  @if unit($value) == "rem" {
+    @return $value;
+
+	}
+
+  @if unit($value) == "em" {
+		@return strip-units($value) * 1rem;
+  }
+
+	$fs-root: 16px !default;
+
+  @return strip-units(math.div($value, $fs-root)) * 1rem;
+}
+
+@function em($value, $base: 16px) {
+  $_value: rem($value);
+  $_base: rem($base);
+
+  @return math.div($_value, $_base) * 1em;
+}
+
+@function clamped(
+  $min-value,
+  $max-value,
+  $min-view-width: $xx-small,
+  $max-view-width: $canvas
+) {
+  $multiplier: math.div(
+    rem($max-value - $min-value),
+    rem($max-view-width - $min-view-width)
+  );
+
+  @return clamp(
+    $min-value,
+    calc(#{$min-value} + #{$multiplier} * (100vw - #{$min-view-width})),
+    $max-value
+  );
+}
+
+@function maxed(
+  $min-value,
+  $max-value,
+  $min-view-width: $xx-small,
+  $max-view-width: $canvas
+) {
+  $multiplier: math.div(
+    rem($max-value - $min-value),
+    rem($max-view-width - $min-view-width)
+  );
+
+  @return max(
+    $min-value,
+    calc(#{$min-value} + #{$multiplier} * (100vw - #{$min-view-width}))
+  );
+}
+
+@function calculate-root-fs() {
+	$fs-root: 16px !default;
+	@if unit($fs-root) != "px" {
+		@error "`#{unit($fs-root)}` is not a valid unit for $fs-root. Use `px`.";
+	}
+	@return math.div(strip-units($fs-root), 16) * 1rem;
+}

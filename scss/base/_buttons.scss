@@ -1,0 +1,19 @@
+@use "../helpers/helpers" as *;
+
+.btn {
+  background-color: hsl(6deg 93% 63%);
+  font-size: 17rem;
+  border-radius: em(5, 17);
+  text-align: center;
+  color: hsl(0deg 0% 100%);
+  padding: em(21, 17) em(34, 17);
+	text-transform: capitalize;
+  transition: 0.3s;
+
+  @media (any-hover: hover) {
+    &:hover,
+    &:focus-visible {
+      background-color: hsl(36deg 100% 50%);
+    }
+  }
+}

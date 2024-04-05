@@ -1,0 +1,131 @@
+// SCSS RSVP
+
+// Responsive values
+
+// Author: Arkanit (https://github.com/Arkanit7)
+
+@use "variables" as *;
+@use "functions" as *;
+@use "mixins" as *;
+@use "sass:math";
+
+@function rsvp-fluid(
+  $min-value,
+  $max-value,
+  $min-view-width: rem($xx-small),
+  $max-view-width: rem($content)
+) {
+  $multiplier: math.div(
+    rem($max-value - $min-value),
+    rem($max-view-width - $min-view-width)
+  );
+
+  @return calc(#{$min-value} + #{$multiplier} * (100vw - #{$min-view-width}));
+}
+
+@function rsvp-clamp(
+  $min-value,
+  $max-value,
+  $min-view-width: rem($xx-small),
+  $max-view-width: rem($content)
+) {
+  // 0 value fix
+  @if $min-value == 0 {
+    $min-value: $max-value * 0;
+  }
+
+  @if $max-value == 0 {
+    $min-value: $min-value * 0;
+  }
+
+  @return clamp(
+    $min-value,
+    rsvp-fluid($min-value, $max-value, $min-view-width, $max-view-width),
+    $max-value
+  );
+}
+
+@function rsvp-min(
+  $min-value,
+  $max-value,
+  $min-view-width: rem($xx-small),
+  $max-view-width: rem($content)
+) {
+  @return min(
+    rsvp-fluid($min-value, $max-value, $min-view-width, $max-view-width),
+    $max-value
+  );
+}
+
+@function rsvp-max(
+  $min-value,
+  $max-value,
+  $min-view-width: rem($xx-small),
+  $max-view-width: rem($content)
+) {
+  @return max(
+    $min-value,
+    rsvp-fluid($min-value, $max-value, $min-view-width, $max-view-width)
+  );
+}
+
+@function rsvp-fluid-auto($max-value, $max-view-width: $content) {
+  @return rsvp-fluid(
+    math.div($max-value, 2),
+    $max-value,
+    0 * $max-view-width,
+    $max-view-width
+  );
+}
+
+@function rsvp-max-auto($max-value, $max-view-width: $content) {
+  @return rsvp-max(
+    math.div($max-value, 2.5),
+    $max-value,
+    0 * $max-view-width,
+    $max-view-width
+  );
+}
+
+@function rsvp-min-auto($max-value, $max-view-width: $content) {
+  @return rsvp-min(
+    math.div($max-value, 2.5),
+    $max-value,
+    0 * $max-view-width,
+    $max-view-width
+  );
+}
+
+@function rsvp-clamp-auto($max-value, $max-view-width: $content) {
+  @return rsvp-clamp(
+    math.div($max-value, 2.5),
+    $max-value,
+    0 * $max-view-width,
+    $max-view-width
+  );
+}
+
+// Mixin
+// @include rsvp(property, minimal value, maximal value, minimal screen width, maximal screen width);
+@mixin rsvp(
+  $property,
+  $min-value,
+  $max-value,
+  $min-view-width: rem($xx-small),
+  $max-view-width: rem($content)
+) {
+  #{$property}: $min-value;
+
+  @media only all and (min-width: #{$min-view-width}) {
+    #{$property}: rsvp-fluid(
+      $min-value,
+      $max-value,
+      $min-view-width,
+      $max-view-width
+    );
+  }
+
+  @media only all and (min-width: #{$max-view-width}) {
+    #{$property}: $max-value;
+  }
+}

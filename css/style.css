@@ -1,0 +1,226 @@
+@import "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Montserrat:wght@100..900&display=swap";
+/* Reset styles v3.0.0 */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  display: inline-block;
+}
+
+html,
+body {
+  line-height: 1.4;
+  height: 100%;
+}
+
+a {
+  text-decoration: unset;
+  color: unset;
+  display: inline-block;
+}
+
+li {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font: unset;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form */
+input,
+button,
+textarea {
+  font: unset;
+  color: unset;
+  background-color: unset;
+}
+
+input,
+textarea {
+  width: 100%;
+}
+
+button,
+select,
+option {
+  cursor: pointer;
+}
+
+input[type=text],
+input[type=email],
+input[type=tel],
+textarea {
+  appearance: unset;
+}
+
+/* End of the reset styles */
+/* GLOBAL STYLES */
+:root {
+  font-size: 0.0625rem;
+}
+
+body {
+  line-height: 1.6;
+  font-size: 14rem;
+  font-weight: 500;
+  font-family: montserrat, sans-serif;
+  color: hsl(228, 12%, 48%);
+  background-color: hsl(30, 38%, 92%);
+}
+
+/* Utility classes */
+[class*=__container] {
+  max-width: 1202rem;
+  margin-inline: auto;
+  padding-inline: 16rem;
+}
+
+.wrapper {
+  overflow: hidden;
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+  padding: 16rem;
+}
+
+.button {
+  background-color: hsl(158, 36%, 37%);
+  color: hsl(0, 0%, 100%);
+  font-size: 14rem;
+  padding: 0.9em 2.7em;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12rem;
+  transition: 0.3s;
+}
+@media (any-hover: hover) {
+  .button:is(:hover, :focus-visible) {
+    background-color: hsl(159, 36%, 17%);
+  }
+}
+.button--icon--cart::before {
+  content: "";
+  width: 15rem;
+  height: 16rem;
+  flex-shrink: 0;
+  background-image: url("../img/icon-cart.svg");
+}
+
+.ibg {
+  position: relative;
+}
+.ibg img {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* ie9+ */
+.visually-hidden:not(:focus, :active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Main styles */
+.product {
+  border-radius: 8rem;
+  overflow: hidden;
+  background-color: hsl(0, 0%, 100%);
+}
+@media only all and (min-width: 37.5em) {
+  .product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    max-width: 600rem;
+  }
+}
+.product__picture {
+  aspect-ratio: 343/240;
+}
+@media only all and (min-width: 37.5em) {
+  .product__picture {
+    aspect-ratio: unset;
+  }
+}
+.product__content {
+  padding: 24rem;
+}
+.product__content > :not(:last-child) {
+  margin-bottom: 12rem;
+}
+@media only all and (min-width: 37.5em) {
+  .product__content {
+    padding: 32rem;
+  }
+  .product__content > :not(:last-child) {
+    margin-bottom: 20rem;
+  }
+}
+.product__type {
+  text-transform: uppercase;
+  color: hsl(228, 12%, 48%);
+  font-size: 12rem;
+  letter-spacing: 0.4em;
+}
+.product__title {
+  color: hsl(212, 21%, 14%);
+  font-family: fraunces, serif;
+  font-weight: 700;
+  line-height: 1;
+  font-size: 32rem;
+}
+.product__title:not(:last-child) {
+  margin-bottom: 18rem;
+}
+@media only all and (min-width: 37.5em) {
+  .product__title:not(:last-child) {
+    margin-bottom: 24rem;
+  }
+}
+.product__prices {
+  display: flex;
+  align-items: center;
+  gap: 12rem;
+}
+.product__current-price {
+  font-weight: 700;
+  font-family: fraunces, serif;
+  color: hsl(158, 36%, 37%);
+  font-size: 32rem;
+}
+.product__button {
+  width: 100%;
+}

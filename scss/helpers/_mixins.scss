@@ -1,0 +1,65 @@
+@use "sass:math";
+@use "variables" as *;
+@use "functions" as *;
+
+@mixin media-height-from($height) {
+  @media only all and (min-height: $height) {
+    @content;
+  }
+}
+
+@mixin media-height-to($height) {
+  @media only all and (max-height: $height) {
+    @content;
+  }
+}
+
+@mixin media-width-from($width) {
+  @media only all and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin media-width-to($width) {
+  @media only all and (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin responsive-value(
+  $property,
+  $min-value,
+  $max-value,
+  $min-view-width,
+  $max-view-width
+) {
+  //responsive-value(property, наймешне значення, найбільше значення, найменша ширина екрану, найбільша ширина екрану)
+
+  $multiplier: math.div(
+    rem($max-value - $min-value),
+    rem($max-view-width - $min-view-width)
+  );
+  #{$property}: $min-value;
+  @media only all and (min-width: #{$min-view-width}) {
+    #{$property}: calc(
+      #{$min-value} + #{$multiplier} * (100vw - #{$min-view-width})
+    );
+  }
+  @media only all and (min-width: #{$max-view-width}) {
+    #{$property}: $max-value;
+  }
+}
+
+@mixin hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin not-last {
+  &:not(:last-child) {
+		@content;
+  }
+}
